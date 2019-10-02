@@ -2,6 +2,7 @@ package com.emmanuelkiametis.learningspringboot.learningspringboot.controller;
 
 import com.emmanuelkiametis.learningspringboot.learningspringboot.database.model.User;
 import com.emmanuelkiametis.learningspringboot.learningspringboot.database.repository.UserRepository;
+import com.emmanuelkiametis.learningspringboot.learningspringboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -12,15 +13,15 @@ import reactor.core.publisher.Mono;
 public class UserController {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @GetMapping(path = "/{name}")
-    public Mono<User> helloUser (@PathVariable("name") String name) {
-        return userRepository.findByName(name);
+    public Mono<User> findUserByName (@PathVariable("name") String name) {
+        return userService.findUserByName(name);
     }
 
     @GetMapping
     public Flux<User> findAllUsers () {
-        return userRepository.findAll();
+        return userService.findAllUsers();
     }
 }
